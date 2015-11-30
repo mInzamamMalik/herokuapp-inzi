@@ -7,7 +7,7 @@ var express = require("express");
 var cors = require('cors');
 
 var app = express();
-
+var port = process.env.PORT || 8080;
 
 app.use(cors());
 
@@ -30,6 +30,6 @@ app.get("/random/:min/:max", function (req, res) {
 });
 
 
-app.listen(3000, function () {
-    console.log('listening at 3000');
+app.listen(port, function () {
+    console.log('listening at: ' + port);
 });
