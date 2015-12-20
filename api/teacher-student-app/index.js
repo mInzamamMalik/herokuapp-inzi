@@ -22,7 +22,7 @@ var allUsers = [
     }
 ];
 var app = express.Router();
-app.use(cors());
+//app.use(cors());
 app.use(bodyParser.json({}));
 app.post("/login", function (req, res) {
     var logedin = null;
