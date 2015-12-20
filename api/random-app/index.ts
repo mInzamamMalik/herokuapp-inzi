@@ -1,22 +1,26 @@
 import express = require("express");
+import bodyParser = require("body-parser");
 
+var v1 = require("./v1/index");
 
-var v1 = require("./v1");
-
-var app = express.Router();
+let app = express.Router();
 
 
 app.use("/v1",v1);
+
+
+
 
 
 app.use((req:express.Request , res:express.Response , next:Function)=>{
     
     res.writeHead(404);
     res.json({
-        from    : "teacher student app",
+        from    : "random app",
         res     : "invalid version"
     });
 });
 
-
 module.exports = app;
+
+
