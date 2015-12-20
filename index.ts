@@ -1,10 +1,15 @@
 import express = require("express");
-var cors = require('cors');
+import teacher_student_app = require("./teacher-student-app/app");
+let cors = require('cors');
 
-var app = express();
-var port = process.env.PORT || 8080;
+let app = express();
+let port = process.env.PORT || 8080;
 
 app.use(cors());
+
+
+
+app.use("/teacher-student-app",teacher_student_app);
 
 
 app.get("/random/:min/:max", (req, res)=>{

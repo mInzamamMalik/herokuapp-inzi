@@ -1,8 +1,10 @@
 var express = require("express");
+var teacher_student_app = require("./teacher-student-app/app");
 var cors = require('cors');
 var app = express();
 var port = process.env.PORT || 8080;
 app.use(cors());
+app.use("/teacher-student-app", teacher_student_app);
 app.get("/random/:min/:max", function (req, res) {
     console.log(req.params);
     var min = parseInt(req.params.min);
