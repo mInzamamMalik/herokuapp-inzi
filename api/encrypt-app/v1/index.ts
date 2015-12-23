@@ -8,13 +8,21 @@ api.use(bodyparser.json({}));
 
 
 api.post("/passwordToHash", (req: express.Request, res: express.Response, next: Function) => {
-    let rounds = req.body.rounds;
+    let rounds = parseInt(req.body.rounds);
     let password = req.body.password;
     
     if(!password){
         return next("password(which you want to encrypt) is required");
     }
-
+    if(isNaN(rounds) || !rounds ){
+        rounds = 10;
+    }
+       
+       
+        console.log("rounds is: " + rounds);
+        
+        
+        
     bcrypt.genSalt(rounds, function(err, salt) {
         if (err) {
             return next(err);

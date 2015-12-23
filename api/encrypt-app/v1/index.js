@@ -4,13 +4,20 @@ var bcrypt = require("bcrypt-nodejs");
 var api = express.Router();
 api.use(bodyparser.json({}));
 api.post("/passwordToHash", function (req, res, next) {
-    var rounds = req.body.rounds;
-    var data = req.body.password;
+    var rounds = parseInt(req.body.rounds);
+    var password = req.body.password;
+    if (!password) {
+        return next("password(which you want to encrypt) is required");
+    }
+    if (isNaN(rounds) || !rounds) {
+        rounds = 10;
+    }
+    console.log("rounds is: " + rounds);
     bcrypt.genSalt(rounds, function (err, salt) {
         if (err) {
             return next(err);
         }
-        bcrypt.hash(data, salt, function () { }, function (err, hashedPassword) {
+        bcrypt.hash(password, salt, function () { }, function (err, hashedPassword) {
             if (err) {
                 return next(err);
             }
