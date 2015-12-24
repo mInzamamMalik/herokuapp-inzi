@@ -25,6 +25,27 @@ api.post("/passwordToHash", function (req, res, next) {
         });
     });
 });
+api.post("/varifyHash", function (req, res, next) {
+    var realPassword = req.body.realPassword;
+    var hashedPassword = req.body.hashedPassword;
+    bcrypt.compare(realPassword, hashedPassword, function (err, result) {
+        console.log(result, err);
+        if (err) {
+            return next('Encrypted password is invalid');
+        }
+        if (result == false) {
+            return next('NOT Matched');
+        }
+        res.json({
+            res: 'Password and Hash Matched'
+        });
+    });
+});
+api.use("/varifyHash", function (err, req, res, next) {
+    res.json({
+        res: err
+    });
+});
 api.use(function (err, req, res, next) {
     console.log(err);
     res.json({
