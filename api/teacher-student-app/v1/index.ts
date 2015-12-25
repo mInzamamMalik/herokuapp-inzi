@@ -1,6 +1,6 @@
 import express = require("express");
 import bodyParser = require("body-parser");
-//var cors = require("cors");
+
 
 var allUsers = [
     {
@@ -21,9 +21,41 @@ var allUsers = [
 ];
 var app = express.Router();
 
-//app.use(cors());
+
 
 app.use(bodyParser.json({}));
+
+
+
+
+
+app.post("/signup",(req:express.Request , res:express.Response )=>{
+    var signupInfo = req.body;
+
+    
+    res.json({res : "default response"});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.post("/login", function (req, res) {

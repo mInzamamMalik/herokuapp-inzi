@@ -1,6 +1,5 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-//var cors = require("cors");
 var allUsers = [
     {
         email: "malikasinger@gmail.com",
@@ -19,8 +18,12 @@ var allUsers = [
     }
 ];
 var app = express.Router();
-//app.use(cors());
 app.use(bodyParser.json({}));
+app.post("/signup", function (req, res) {
+    //var signupInfo = 
+    console.log(req.body);
+    res.json({ res: "default response" });
+});
 app.post("/login", function (req, res) {
     var logedin = null;
     console.log("post hitted " + logedin);

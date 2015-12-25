@@ -11,7 +11,6 @@ app.use("/v1",v1);
 
 app.use((req:express.Request , res:express.Response , next:Function)=>{
     
-    res.writeHead(404);
     res.json({
         from    : "teacher student app",
         res     : "invalid version"
