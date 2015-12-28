@@ -24,16 +24,21 @@ app.post("/signup", (req: express.Request, res: express.Response, next: Function
 
     currentDocument.save(next);
 
-    res.json({ res: "default response" });
 });
 
 
-// app.post("signup/validation/email",(req:express.Request , res:express.Response , next:Function)=>{
+// app.post("signup/validation/email", (req: express.Request, res: express.Response, next: Function) => {
 
 //     let email = req.body.email;
-    
-//     usersModal.findone();
-        
+
+//     console.log(email);
+
+//     usersModal.findOne({ 'email': email }, 'email search', function(err, data) {
+//         if (data)
+//             res.send(data);
+
+//         if (err) res.send(err);
+//     });
 // });
 
 
@@ -43,71 +48,75 @@ app.post("/signup", (req: express.Request, res: express.Response, next: Function
 
 
 
+app.post("/login", function(req: express.Request, res: express.Response, next: Function) {
 
+    let loginInfo = req.body.loginInfo;
+    console.log(loginInfo);
 
+    usersModal.find({ 'username': loginInfo.username }, 'password', function(err, data) {
+        if (data) {
+            console.log("no error ", data);
 
-
-
-
-var allUsers = []; // this line will be removed before host on heroku
-
-
-
-
-
-app.post("/login", function(req, res) {
-
-    var logedin = null;
-
-
-    for (var i = 0; i < allUsers.length; i++) {
-
-        if (req.body.email == allUsers[i].email) {
-            if (req.body.password == allUsers[i].password) {
-                logedin = i;
-                console.log(allUsers[i].email + "   " + allUsers[i].password);
-                break;
+            if (data.length == 0) {
+                console.log("loged in successfully");
+                res.send({
+                    status: "error",
+                    message: "user not found",
+                    logedIn: false
+                });
+                return;
+                
+                
+            } else {
+                
+                
+                if (loginInfo.password == data[0].password) {
+                    console.log("loged in successfully");
+                    res.send({
+                        status: "success",
+                        message: "loged in as " + loginInfo.username,
+                        logedIn: true
+                    });
+                    return;
+                } else {
+                    console.log("password not matched");
+                    res.send({
+                        status: "error",
+                        message: "password not matched",
+                        logedIn: false
+                    });
+                    return;
+                }
+                
+                
             }
-
+        }else if (err) {
+            console.log("error found");
+            next(err);
+            return;
         }
-    }
-
-
-    if (logedin != null) {
-        res.json({
-            status: "signed in",
-            as: allUsers[logedin].email,
-            adminStatus: allUsers[logedin].adminStatus
-        });
-    } else {
-        res.json({
-            status: "Email or Password not matched"
-        })
-    }
-});
-
-app.get("/login", function(req, res) {
-    console.log("get login hitted");
-    res.end();
-});
-
-
-
-app.use((req: express.Request, res: express.Response, next: Function) => {
-
-    res.writeHead(404);
-    res.json({
-        from: "teacher student app",
-        version: "v1",
-        res: "request not found"
     });
+
 });
 
 
-app.use("/signup", (err: Error, req: express.Request, res: express.Response, next: Function) => {
-    console.log("error occured during save");
-    console.log(err);
-});
+
+
+// app.use((req: express.Request, res: express.Response, next: Function) => {
+
+//     res.json({
+//         from: "teacher student app",
+//         version: "v1",
+//         res: "request not found"
+//     });
+// });
+
+
+// app.use("/signup", (err: Error, req: express.Request, res: express.Response, next: Function) => {
+//     console.log("error occured during save");
+//     console.log(err);
+//     res.send(err);
+// });
 
 
 module.exports = app;

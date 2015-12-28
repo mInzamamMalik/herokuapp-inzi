@@ -6,7 +6,7 @@ var userSchema = new Schema({
     lsatName    : String,
     username    : { type : String , require : true , index: {unique: true} },
     password    : String,
-    Email       : { type : String , require : true, index: {unique: true} },
+    email       : { type : String , require : true, index: {unique: true} },
     created     : { type: Date , default: Date.now }
     
 }); 
