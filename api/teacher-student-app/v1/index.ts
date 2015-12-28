@@ -1,42 +1,40 @@
 import express = require("express");
 import bodyParser = require("body-parser");
+import mongoose = require("mongoose");
+let usersModal = require("./modals/users");
 
 
-var allUsers = [
-    {
-        email: "malikasinger@gmail.com",
-        password: "pakistan",
-        adminStatus: 'admin'
-    },
-    {
-        email: "admin@admin.com",
-        password: "admin",
-        adminStatus: 'admin'
-    },
-    {
-        email: "user@user.com",
-        password: "user",
-        adminStatus: 'user'
-    }
-];
+mongoose.connect("mongodb://malikasinger:pakistan@ds037095.mongolab.com:37095/inzi");
+
 var app = express.Router();
-
-
 
 app.use(bodyParser.json({}));
 
+app.post("/signup", (req: express.Request, res: express.Response, next: Function) => {
+    var signupInfo = req.body.signupInfo;
 
+    let currentDocument = new usersModal({
 
+        firstName: signupInfo.fname,
+        lsatName: signupInfo.lname,
+        username: signupInfo.username,
+        password: signupInfo.password,
+        email: signupInfo.email
+    });
 
+    currentDocument.save(next);
 
-app.post("/signup",(req:express.Request , res:express.Response )=>{
-    var signupInfo = req.body;
-
-    
-    res.json({res : "default response"});
+    res.json({ res: "default response" });
 });
 
 
+// app.post("signup/validation/email",(req:express.Request , res:express.Response , next:Function)=>{
+
+//     let email = req.body.email;
+    
+//     usersModal.findone();
+        
+// });
 
 
 
@@ -51,17 +49,16 @@ app.post("/signup",(req:express.Request , res:express.Response )=>{
 
 
 
+var allUsers = []; // this line will be removed before host on heroku
 
 
 
 
 
-
-
-app.post("/login", function (req, res) {
+app.post("/login", function(req, res) {
 
     var logedin = null;
-    console.log("post hitted " + logedin);
+
 
     for (var i = 0; i < allUsers.length; i++) {
 
@@ -89,22 +86,50 @@ app.post("/login", function (req, res) {
     }
 });
 
-app.get("/login", function (req, res) {
+app.get("/login", function(req, res) {
     console.log("get login hitted");
     res.end();
 });
 
 
 
-app.use((req:express.Request , res:express.Response , next:Function)=>{
-    
+app.use((req: express.Request, res: express.Response, next: Function) => {
+
     res.writeHead(404);
     res.json({
-        from    : "teacher student app",
-        version : "v1",
-        res     : "request not found"
+        from: "teacher student app",
+        version: "v1",
+        res: "request not found"
     });
 });
 
 
+app.use("/signup", (err: Error, req: express.Request, res: express.Response, next: Function) => {
+    console.log("error occured during save");
+    console.log(err);
+});
+
+
 module.exports = app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

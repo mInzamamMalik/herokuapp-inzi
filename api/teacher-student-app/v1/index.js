@@ -1,32 +1,29 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var allUsers = [
-    {
-        email: "malikasinger@gmail.com",
-        password: "pakistan",
-        adminStatus: 'admin'
-    },
-    {
-        email: "admin@admin.com",
-        password: "admin",
-        adminStatus: 'admin'
-    },
-    {
-        email: "user@user.com",
-        password: "user",
-        adminStatus: 'user'
-    }
-];
+var mongoose = require("mongoose");
+var usersModal = require("./modals/users");
+mongoose.connect("mongodb://malikasinger:pakistan@ds037095.mongolab.com:37095/inzi");
 var app = express.Router();
 app.use(bodyParser.json({}));
-app.post("/signup", function (req, res) {
-    //var signupInfo = 
-    console.log(req.body);
+app.post("/signup", function (req, res, next) {
+    var signupInfo = req.body.signupInfo;
+    var currentDocument = new usersModal({
+        firstName: signupInfo.fname,
+        lsatName: signupInfo.lname,
+        username: signupInfo.username,
+        password: signupInfo.password,
+        email: signupInfo.email
+    });
+    currentDocument.save(next);
     res.json({ res: "default response" });
 });
+// app.post("signup/validation/email",(req:express.Request , res:express.Response , next:Function)=>{
+//     let email = req.body.email;
+//     usersModal.findone();
+// });
+var allUsers = []; // this line will be removed before host on heroku
 app.post("/login", function (req, res) {
     var logedin = null;
-    console.log("post hitted " + logedin);
     for (var i = 0; i < allUsers.length; i++) {
         if (req.body.email == allUsers[i].email) {
             if (req.body.password == allUsers[i].password) {
@@ -60,5 +57,9 @@ app.use(function (req, res, next) {
         version: "v1",
         res: "request not found"
     });
+});
+app.use("/signup", function (err, req, res, next) {
+    console.log("error occured during save");
+    console.log(err);
 });
 module.exports = app;

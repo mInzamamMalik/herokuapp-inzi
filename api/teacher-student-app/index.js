@@ -8,5 +8,4 @@ app.use(function (req, res, next) {
         res: "invalid version"
     });
 });
-5;
 module.exports = app;
