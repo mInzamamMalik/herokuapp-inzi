@@ -51,12 +51,15 @@ app.post("/signup", (req: express.Request, res: express.Response, next: Function
 app.post("/login", function(req: express.Request, res: express.Response, next: Function) {
 
     let loginInfo = req.body.loginInfo;
-    console.log(loginInfo);
-
-    usersModal.find({ 'username': loginInfo.username }, 'password', function(err, data) {
+    //console.log(loginInfo);
+//////////////////////////////////////  login logic start //////////////////////
+    usersModal.findOne({ 'username': loginInfo.username }, 'password', function(err, data) {
+        
+        console.log("this code hitted");
+        
         if (data) {
             console.log("no error ", data);
-
+            
             if (data.length == 0) {
                 console.log("loged in successfully");
                 res.send({
@@ -64,13 +67,12 @@ app.post("/login", function(req: express.Request, res: express.Response, next: F
                     message: "user not found",
                     logedIn: false
                 });
+                
                 return;
-                
-                
             } else {
-                
-                
-                if (loginInfo.password == data[0].password) {
+
+
+                if (loginInfo.password == data.password) {
                     console.log("loged in successfully");
                     res.send({
                         status: "success",
@@ -85,18 +87,17 @@ app.post("/login", function(req: express.Request, res: express.Response, next: F
                         message: "password not matched",
                         logedIn: false
                     });
+                    
                     return;
                 }
-                
-                
             }
-        }else if (err) {
+        } else if (err) {
             console.log("error found");
             next(err);
             return;
         }
     });
-
+//////////////////////////////////////  login logic start //////////////////////
 });
 
 
