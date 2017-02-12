@@ -9,4 +9,5 @@ app.use(function (req, res, next) {
         res: "invalid version"
     });
 });
-module.exports = app;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = app;

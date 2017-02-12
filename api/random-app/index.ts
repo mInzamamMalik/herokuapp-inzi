@@ -1,7 +1,7 @@
 import express = require("express");
 import bodyParser = require("body-parser");
 
-var v1 = require("./v1/index");
+import v1 from "./v1/index";
 
 let app = express.Router();
 
@@ -17,6 +17,6 @@ app.use((req:express.Request , res:express.Response , next:Function)=>{
     });
 });
 
-module.exports = app;
+export default app;
 
 

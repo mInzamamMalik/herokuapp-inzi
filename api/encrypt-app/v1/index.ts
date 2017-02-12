@@ -1,6 +1,6 @@
-import express = require("express");
-import bodyparser = require("body-parser");
-let bcrypt = require("bcrypt-nodejs");
+import * as express from "express";
+import * as bodyparser from "body-parser";
+import bcrypt  from "bcrypt-nodejs/bCrypt";
 
 let api = express.Router();
 
@@ -70,5 +70,5 @@ api.use((err, req: express.Request, res: express.Response, next: Function) => {
 });
 
 
-module.exports = api;
+export default api;
 

@@ -1,7 +1,7 @@
 "use strict";
 var express = require("express");
 var bodyparser = require("body-parser");
-var bcrypt = require("bcrypt-nodejs");
+var bCrypt_1 = require("bcrypt-nodejs/bCrypt");
 var api = express.Router();
 api.use(bodyparser.json({}));
 api.post("/passwordToHash", function (req, res, next) {
@@ -14,11 +14,11 @@ api.post("/passwordToHash", function (req, res, next) {
         rounds = 10;
         console.log("invalid rounds");
     }
-    bcrypt.genSalt(rounds, function (err, salt) {
+    bCrypt_1.default.genSalt(rounds, function (err, salt) {
         if (err) {
             return next(err);
         }
-        bcrypt.hash(password, salt, function () { }, function (err, hashedPassword) {
+        bCrypt_1.default.hash(password, salt, function () { }, function (err, hashedPassword) {
             if (err) {
                 return next(err);
             }
@@ -29,7 +29,7 @@ api.post("/passwordToHash", function (req, res, next) {
 api.post("/varifyHash", function (req, res, next) {
     var realPassword = req.body.realPassword;
     var hashedPassword = req.body.hashedPassword;
-    bcrypt.compare(realPassword, hashedPassword, function (err, result) {
+    bCrypt_1.default.compare(realPassword, hashedPassword, function (err, result) {
         console.log(result, err);
         if (err) {
             return next('Encrypted password is invalid');
@@ -53,4 +53,5 @@ api.use(function (err, req, res, next) {
         err: err
     });
 });
-module.exports = api;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = api;

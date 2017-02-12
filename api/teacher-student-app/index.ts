@@ -18,4 +18,4 @@ app.use((req:express.Request , res:express.Response , next:Function)=>{
 });
 
 
-module.exports = app;
+export default app;
