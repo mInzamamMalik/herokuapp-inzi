@@ -1,5 +1,7 @@
+"use strict";
 var express = require("express");
-var v1 = require("./v1/index");
+var index_1 = require("./v1/index");
 var api = express.Router();
-api.use("/v1", v1);
-module.exports = api;
+api.use("/v1", index_1.default);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = api;

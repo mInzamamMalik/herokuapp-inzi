@@ -1,3 +1,4 @@
+"use strict";
 var express = require("express");
 var app = express.Router();
 app.get("/:min/:max", function (req, res) {
@@ -19,4 +20,5 @@ app.use(function (req, res, next) {
         res: "request not found"
     });
 });
-module.exports = app;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = app;

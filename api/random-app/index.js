@@ -1,7 +1,8 @@
+"use strict";
 var express = require("express");
-var v1 = require("./v1/index");
+var index_1 = require("./v1/index");
 var app = express.Router();
-app.use("/v1", v1);
+app.use("/v1", index_1.default);
 app.use(function (req, res, next) {
     //    res.writeHead(404);
     res.json({
@@ -9,4 +10,5 @@ app.use(function (req, res, next) {
         res: "invalid version"
     });
 });
-module.exports = app;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = app;

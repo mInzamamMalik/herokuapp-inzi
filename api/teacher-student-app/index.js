@@ -1,3 +1,4 @@
+"use strict";
 var express = require("express");
 var v1 = require("./v1");
 var app = express.Router();
@@ -8,4 +9,5 @@ app.use(function (req, res, next) {
         res: "invalid version"
     });
 });
-module.exports = app;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = app;
