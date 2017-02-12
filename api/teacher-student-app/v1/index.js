@@ -28,10 +28,8 @@ app.post("/signup", function (req, res, next) {
 // });
 app.post("/login", function (req, res, next) {
     var loginInfo = req.body.loginInfo;
-    //console.log(loginInfo);
-    //////////////////////////////////////  login logic start //////////////////////
-    usersModal.findOne({ 'username': loginInfo.username }, 'password', function (err, data) {
-        console.log("this code hitted");
+    console.log(loginInfo);
+    usersModal.find({ 'username': loginInfo.username }, 'password', function (err, data) {
         if (data) {
             console.log("no error ", data);
             if (data.length == 0) {
@@ -44,7 +42,7 @@ app.post("/login", function (req, res, next) {
                 return;
             }
             else {
-                if (loginInfo.password == data.password) {
+                if (loginInfo.password == data[0].password) {
                     console.log("loged in successfully");
                     res.send({
                         status: "success",
@@ -70,7 +68,6 @@ app.post("/login", function (req, res, next) {
             return;
         }
     });
-    //////////////////////////////////////  login logic start //////////////////////
 });
 // app.use((req: express.Request, res: express.Response, next: Function) => {
 //     res.json({
@@ -85,3 +82,4 @@ app.post("/login", function (req, res, next) {
 //     res.send(err);
 // });
 module.exports = app;
+//# sourceMappingURL=index.js.map
