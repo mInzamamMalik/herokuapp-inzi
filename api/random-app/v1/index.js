@@ -1,4 +1,3 @@
-"use strict";
 var express = require("express");
 var app = express.Router();
 app.get("/:min/:max", function (req, res) {

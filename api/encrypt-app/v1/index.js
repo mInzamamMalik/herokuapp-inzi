@@ -1,4 +1,3 @@
-"use strict";
 var express = require("express");
 var bodyparser = require("body-parser");
 var bCrypt_1 = require("bcrypt-nodejs/bCrypt");

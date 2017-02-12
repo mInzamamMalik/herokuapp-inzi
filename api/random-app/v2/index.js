@@ -1,4 +1,3 @@
-"use strict";
 var express = require("express");
 var app = express.Router();
 app.use(function (req, res, next) {
