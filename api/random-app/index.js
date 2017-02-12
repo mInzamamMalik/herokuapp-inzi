@@ -1,3 +1,4 @@
+"use strict";
 var express = require("express");
 var v1 = require("./v1/index");
 var app = express.Router();

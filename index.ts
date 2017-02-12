@@ -8,7 +8,7 @@ var encrypt_app         = require("./api/encrypt-app/index");
 
 let app = express();
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 3010;
 
 app.use( cors() );
 
